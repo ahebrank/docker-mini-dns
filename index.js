@@ -35,8 +35,10 @@ function handleDgram(chunk, rinfo) {
     hostname.fqdn = hostname.fqdn.join('.');
     hostname.octets = chunk.slice(12, offset);
 
-    return lookupDomain(txnid, hostname).then(function(dgramData) {
+    return lookupDomain(txnid, hostname).then(dgramData => {
         s.send(new Buffer(dgramData), 0, dgramData.length, rinfo.port, rinfo.address);
+    }).catch(error => {
+        console.error('Lookup failed for ' + hostname.machineName);
     });
 }
 
@@ -84,7 +86,7 @@ function getMachineIp(machineName) {
 }
 
 function lookupDomain(txnid, hostname) {
-    return getMachineIp(hostname.machineName).then(function(ipStr) {
+    return getMachineIp(hostname.machineName).then(ipStr => {
         var ipOctets = ipStr.split('.').map(Number);
 
         var bufarr = [

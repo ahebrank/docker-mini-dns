@@ -1,6 +1,6 @@
 {
   "name": "docker-mini-dns",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Runs a tiny A-Record DNS server that lets you get to docker containers by hostname",
   "main": "index.js",
   "scripts": {
