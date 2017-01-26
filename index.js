@@ -71,7 +71,8 @@ function getMachineIp(machineName) {
             if (err && cache[machineName]) {
                 resolve(cache[machineName]);
             } else if (err) {
-                console.error(err.message);
+                // failed grep
+                //console.error(err.message);
                 reject(err);
                 return;
             }
