@@ -45,8 +45,7 @@ function handleDgram(chunk, rinfo) {
 function updateConfiguration(port) {
     var resolverPath = '/etc/resolver/docker';
 
-    var fileConfig = 'domain\tdocker\n' +
-                     'nameserver\t127.0.0.1\n' +
+    var fileConfig = 'nameserver\t127.0.0.1\n' +
                      'port\t' + port + '\n' +
                      'search_order\t300000\n' +
                      'timeout\t1\n';
