@@ -11,9 +11,6 @@ var s = udp.createSocket('udp4');
 s.bind(process.argv[2] || 0, function() {
     var port = s.address().port;
     console.log('Listening on UDP port', port);
-    if (process.env.DOCKER_MACHINE_DNS_TLD) {
-        console.log('TLD:', process.env.DOCKER_MACHINE_DNS_TLD);
-    }
     updateConfiguration(port);
     s.on('message', handleDgram);
 });
@@ -44,13 +41,10 @@ function handleDgram(chunk, rinfo) {
 }
 
 function updateConfiguration(port) {
-    var tld = 'docker';
-    if (process.env.DOCKER_MACHINE_DNS_TLD) {
-        tld = process.env.DOCKER_MACHINE_DNS_TLD;
-    }
-    var resolverPath = '/etc/resolver/' + tld;
+    var resolverPath = '/etc/resolver/docker';
 
-    var fileConfig = 'nameserver\t127.0.0.1\n' +
+    var fileConfig = 'domain\tdocker\n' +
+                     'nameserver\t127.0.0.1\n' +
                      'port\t' + port + '\n' +
                      'search_order\t300000\n' +
                      'timeout\t1\n';
@@ -69,12 +63,11 @@ function updateConfiguration(port) {
 
 function getMachineIp(machineName) {
     return new Promise(function(resolve, reject) {
-        var cmd = 'docker-machine ip';
-        if (process.env.DOCKER_MACHINE_DNS_RESOLVER) {
-            cmd = process.env.DOCKER_MACHINE_DNS_RESOLVER;
-        }
+        // var containerName = domain + '_' + machineName;
+        var cmd = 'docker ps -a | grep -q ' + machineName;
+        console.log(cmd);
 
-        exec(cmd + ' ' + machineName, function(err, stdout) {
+        exec(cmd, function(err, stdout) {
             if (err && cache[machineName]) {
                 resolve(cache[machineName]);
             } else if (err) {
@@ -83,7 +76,7 @@ function getMachineIp(machineName) {
                 return;
             }
 
-            cache[machineName] = stdout.trim();
+            cache[machineName] = '127.0.0.1';
             resolve(cache[machineName]);
         });
     });

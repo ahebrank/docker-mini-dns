@@ -1,20 +1,17 @@
 {
-  "name": "docker-machine-dns",
-  "version": "1.2.3",
-  "description": "Runs a tiny DNS server that resolves *.docker hostnames using docker-machine ip",
+  "name": "docker-mini-dns",
+  "version": "0.1",
+  "description": "Runs a tiny A-Record DNS server that lets you get to docker containers by hostname",
   "main": "index.js",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "docker-machine-dns": "./index.js"
+    "docker-mini-dns": "./index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/relateiq/node-docker-machine-dns.git"
+    "url": "git+https://github.com/ahebrank/docker-mini-dns.git"
   },
   "keywords": [
     "docker",
@@ -24,7 +21,7 @@
   "author": "SalesforceIQ",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/relateiq/node-docker-machine-dns/issues"
+    "url": "https://github.com/relateiq/docker-mini-dns/issues"
   },
-  "homepage": "https://github.com/relateiq/node-docker-machine-dns#readme"
+  "homepage": "https://github.com/relateiq/docker-mini-dns#readme"
 }
