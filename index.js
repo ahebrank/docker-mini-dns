@@ -65,7 +65,7 @@ function getMachineIp(machineName) {
     return new Promise(function(resolve, reject) {
         // var containerName = domain + '_' + machineName;
         var cmd = 'docker ps -a | grep -q ' + machineName;
-        console.log(cmd);
+        //console.log(cmd);
 
         exec(cmd, function(err, stdout) {
             if (err && cache[machineName]) {
