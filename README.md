@@ -15,5 +15,4 @@ This is specifically for docker native on OSX, where everything is a port on loc
 1. `sudo mkdir /etc/resolver`
 2. `sudo touch /etc/resolver/docker && chown $USER /etc/resolver/docker`
 3. `docker-mini-dns &`
-
-You may need to edit your DNS lookup list to list `127.0.0.1` as the first server (System Preferences -> Network -> Advanced -> DNS)
+4. `./restart_mdns.sh` -- this is apparently needed to flush the DNS cache on 10.11 and higher
