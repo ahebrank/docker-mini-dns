@@ -43,23 +43,30 @@ function handleDgram(chunk, rinfo) {
 }
 
 function updateConfiguration(port) {
-    var resolverPath = '/etc/resolver/docker';
-
     var fileConfig = 'nameserver\t127.0.0.1\n' +
                      'port\t' + port + '\n' +
                      'search_order\t300000\n' +
                      'timeout\t1\n';
+    writeResolver(fileConfig);
+}
 
-    try {
-        fs.unlinkSync(resolverPath);
-    } catch (e) { }
+function clearResolver() {
+  writeResolver('');
+}
 
-    try {
-        fs.writeFileSync(resolverPath, fileConfig);
-    }
-    catch (e) {
-        console.warn('Could not automatically configure resolver; make sure ' + resolverPath + ' is properly set up');
-    }
+function writeResolver(fileConfig) {
+  var resolverPath = '/etc/resolver/docker';
+
+  try {
+      fs.unlinkSync(resolverPath);
+  } catch (e) { }
+
+  try {
+      fs.writeFileSync(resolverPath, fileConfig);
+  }
+  catch (e) {
+      console.warn('Could not automatically configure resolver; make sure ' + resolverPath + ' is properly set up');
+  }
 }
 
 function getMachineIp(machineName) {
@@ -114,3 +121,9 @@ function lookupDomain(txnid, hostname) {
         return new Buffer(bufarr);
     });
 }
+
+process.on('SIGINT', function () {
+  console.log('Closing ports and clearing config');
+  clearResolver();
+  s.close();
+});
