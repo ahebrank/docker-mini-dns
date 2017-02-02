@@ -72,7 +72,7 @@ function writeResolver(fileConfig) {
 function getMachineIp(machineName) {
     return new Promise(function(resolve, reject) {
         // var containerName = domain + '_' + machineName;
-        var cmd = 'docker ps -a | grep -q ' + machineName;
+        var cmd = 'docker ps | grep -q ' + machineName;
         //console.log(cmd);
 
         exec(cmd, function(err, stdout) {
